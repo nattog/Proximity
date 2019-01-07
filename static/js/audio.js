@@ -25,7 +25,9 @@ window.onload = function() {
     var searchBlock = document.querySelector('#searchDiv');
 
     var audioContext = new(window.AudioContext || window.webkitAudioContext);
-    var sampleBuffer, sound, playButton = document.querySelector('.play');
+    var sampleBuffer = document.querySelector('.play');
+    var sound = document.querySelector('.play');
+    var playButton = document.querySelector('.play');
     var stopButton = document.querySelector('.stop');
     var reverseButton = document.querySelector('#direction');
     var previousButton = document.querySelector('.previous');
