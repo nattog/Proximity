@@ -24,41 +24,41 @@ window.onload = function() {
     var audioBlock = document.querySelector('.audio');
     var searchBlock = document.querySelector('#searchDiv');
 
-    var audioContext = new(window.AudioContext || window.webkitAudioContext),
-        sampleBuffer, sound, playButton = document.querySelector('.play'),
-        stopButton = document.querySelector('.stop'),
-        reverseButton = document.querySelector('#direction'),
-        previousButton = document.querySelector('.previous'),
-        nextButton = document.querySelector('.next'),
-        mousepan = false,
-        loop = false,
-        forward = true,
-        playlist = tracks,
-        trackTitle = document.querySelector('.audiotrack')
-        loopButton = document.querySelector('#loop'),
-        loopStart = document.querySelector('.loop-start'),
-        loopEnd = document.querySelector('.loop-end'),
-        loopStartValue = document.querySelector('.loopStart-value'),
-        loopEndValue = document.querySelector('.loopEnd-value'),
-        playbackSlider = document.querySelector('.playback-slider'),
-        playbackRate = document.querySelector('.rate'),
-        cutoffSlider = document.querySelector('.cutoff-slider'),
-        cutoffValue = document.querySelector('.cutoff'),
-        qSlider = document.querySelector('.q-slider'),
-        qValue = document.querySelector('.q-value'),
-        modSpeedSlider = document.querySelector('.modSpeed-slider'),
-        modSpeed = document.querySelector('.modSpeed-value'),
-        amplitudeAmountSlider = document.querySelector('.ampMod-slider'),
-        amplitudeAmount = document.querySelector('.ampMod-value'),
-        playbackModSlider = document.querySelector('.playbackMod-slider'),
-        playbackModValue = document.querySelector('.playbackMod-value'),
-        filterModSlider = document.querySelector('.filterMod-slider'),
-        filterModValue = document.querySelector('.filterMod-value'),
-        indication = document.querySelector('#indication'),
-        ampModGain = audioContext.createGain(),
-        playbackModGain = audioContext.createGain(),
-        filterModGain = audioContext.createGain(),
-        vca = audioContext.createGain();
+    var audioContext = new(window.AudioContext || window.webkitAudioContext);
+    var sampleBuffer, sound, playButton = document.querySelector('.play');
+    var stopButton = document.querySelector('.stop');
+    var reverseButton = document.querySelector('#direction');
+    var previousButton = document.querySelector('.previous');
+    var nextButton = document.querySelector('.next');
+    var mousepan = false;
+    var loop = false;
+    var forward = true;
+    var playlist = tracks;
+    var trackTitle = document.querySelector('.audiotrack');
+    var loopButton = document.querySelector('#loop');
+    var loopStart = document.querySelector('.loop-start');
+    var loopEnd = document.querySelector('.loop-end');
+    var loopStartValue = document.querySelector('.loopStart-value');
+    var loopEndValue = document.querySelector('.loopEnd-value');
+    var playbackSlider = document.querySelector('.playback-slider');
+    var playbackRate = document.querySelector('.rate');
+    var cutoffSlider = document.querySelector('.cutoff-slider');
+    var cutoffValue = document.querySelector('.cutoff');
+    var qSlider = document.querySelector('.q-slider');
+    var qValue = document.querySelector('.q-value');
+    var modSpeedSlider = document.querySelector('.modSpeed-slider');
+    var modSpeed = document.querySelector('.modSpeed-value');
+    var amplitudeAmountSlider = document.querySelector('.ampMod-slider');
+    var amplitudeAmount = document.querySelector('.ampMod-value');
+    var playbackModSlider = document.querySelector('.playbackMod-slider');
+    var playbackModValue = document.querySelector('.playbackMod-value');
+    var filterModSlider = document.querySelector('.filterMod-slider');
+    var filterModValue = document.querySelector('.filterMod-value');
+    var indication = document.querySelector('#indication');
+    var ampModGain = audioContext.createGain();
+    var playbackModGain = audioContext.createGain();
+    var filterModGain = audioContext.createGain();
+    var vca = audioContext.createGain();
 
   var playing = (playButton.disabled === true);
 
@@ -554,5 +554,4 @@ window.onload = function() {
     		source.connect(audioContext.destination);
     		source.start(0);
     	}, false);
-
     };
