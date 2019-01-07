@@ -1,4 +1,4 @@
-window.addEventListener('load', function() {
+window.onload = function(){
   var width = window.innerWidth;
   var playIcon = document.getElementById('#playIcon');
   var info = document.getElementById('information');
@@ -15,4 +15,4 @@ window.addEventListener('load', function() {
       intro.style.display = "none";
     };
   }
-});
+};
