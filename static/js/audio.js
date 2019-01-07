@@ -556,5 +556,4 @@ window.onload = function() {
     	}, false);
 
     };
-    return false;
   };
