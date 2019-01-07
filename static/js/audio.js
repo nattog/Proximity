@@ -13,6 +13,7 @@
     if (isSafari) {
       document.getElementById('vib').innerHTML = "";
     }
+    };
 
     var tracks = [];
     var results = [];
@@ -157,8 +158,6 @@
 
     function sampleAssign() {
         try {
-          // console.log(tracks[loc].name);
-          // console.log(tracks[loc].preview);
           let trackName = tracks[loc].name;
           sampleURL = tracks[loc].preview;
         }
@@ -169,7 +168,6 @@
         finally {
       }
   }
-  };
 
     playButton.onclick = function () {
         playSound();
@@ -351,13 +349,13 @@
     }
 
     // function to load sounds via AJAX
-    async function loadSound(url) {
+    function loadSound(url) {
         var request = new XMLHttpRequest();
         request.open('GET', url, true);
         request.responseType = 'arraybuffer';
 
         request.onload = function () {
-            audioContext.decodeAudioData(request.response, async function (buffer) {
+            audioContext.decodeAudioData(request.response, function (buffer) {
                 soundLength = buffer.duration;
                 sampleBuffer = buffer;
                 reversed = cloneAudioBuffer(buffer, audioContext);
