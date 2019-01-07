@@ -556,5 +556,4 @@ document.addEventListener('DOMContentLoaded', () => {
     		source.connect(audioContext.destination);
     		source.start(0);
     	}, false);
-    };
-  });
+    });
