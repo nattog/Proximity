@@ -1,4 +1,3 @@
-document.addEventListener('DOMContentLoaded', () => {
   var launch = document.getElementById("playLink");
   var interface = document.getElementById('interface');
   var intro = document.getElementById('introduction');
@@ -556,4 +555,3 @@ document.addEventListener('DOMContentLoaded', () => {
     		source.connect(audioContext.destination);
     		source.start(0);
     	}, false);
-    });

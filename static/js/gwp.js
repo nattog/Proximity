@@ -1,4 +1,3 @@
-document.addEventListener('DOMContentLoaded', () => {
   var width = window.innerWidth;
   var playIcon = document.querySelector('#playIcon');
   var info = document.getElementById('information');
@@ -19,4 +18,3 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
   }
-});
