@@ -557,4 +557,4 @@ document.addEventListener('DOMContentLoaded', () => {
     		source.start(0);
     	}, false);
     };
-  };
+  });
