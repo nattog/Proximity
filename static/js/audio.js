@@ -556,4 +556,3 @@ window.onload = function() {
     	}, false);
 
     };
-  };
