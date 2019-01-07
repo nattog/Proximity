@@ -1,4 +1,4 @@
-window.onload = function() {
+document.addEventListener('DOMContentLoaded', () => {
   var launch = document.getElementById("playLink");
   var interface = document.getElementById('interface');
   var intro = document.getElementById('introduction');
@@ -557,3 +557,4 @@ window.onload = function() {
     		source.start(0);
     	}, false);
     };
+  };
