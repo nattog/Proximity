@@ -1,1 +1,136 @@
-Hello World
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="keywords" content="Proximity, interactive, web, audio, player"/>
+        <title>
+          Proximity - interactive web audio player
+        </title>
+        <meta name="description" content="Proximity - interactive web audio player" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type='text/css' href="/static/css/gwp.css">
+        <link href="https://fonts.googleapis.com/css?family=Aldrich" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Catamaran:300,400,500" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script src="/static/js/gwp.js"></script>
+    </head>
+
+<div class="fullContent">
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<div class="audio" id="audio">
+		<div>
+			<div class="row">
+				<div class="col-sm-4">
+					<div id="introduction">An interactive audio player, inspired by the sonic manipulations of musique concrète and early sampling techniques.
+						<br>
+						<br>
+					</div>
+				</div>
+				<div class="col-sm-4" id="launch"> <a id="playLink"><span class="glyphicon glyphicon-play" id="playIcon" aria-hidden="true"></span></a>
+				</div>
+				<div class="col-sm-4" id="information">Page Modes:
+					<br>
+					<br>Code - Freesound archives.
+					<br>Music - Full-length songs
+					<br>Words - Sp-oooooken Worrrrrrrd.</div>
+			</div>
+		</div>
+		<div id="interface">
+			<div class="row">
+				<div class="col-md-6" id="indication"></div>
+				<div class="col-md-6" id="searchDiv">
+					<div id="searchBar">
+						<form class="form-search form-inline" id="search-track" style="display: none;" onsubmit="return false;">
+							<div class="input-group">
+								<input type="text" class="form-control search-query" id="SearchQuery" placeholder="Drum Loop" name="srch-term" />
+								<div class="input-group-btn">
+									<button class="btn btn-default" id="searchButton" type="submit"> <span class="glyphicon glyphicon-search"></span>
+									</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12" id='trackDetails'>
+					<div class='audiotrack'></div>
+				</div>
+			</div>
+			<div class="row" id="movementControl">
+				<div class="col-md-3 col-sm-0" id="blank"></div>
+				<div class="col-md-5 col-sm-6" id="transport">
+					<button class="previous" disabled><span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span>
+					</button>
+					<button class="play" disabled><span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+					</button>
+					<button class="stop" disabled><span class="glyphicon glyphicon-stop" aria-hidden="true"></span>
+					</button>
+					<button class="next" disabled><span class="glyphicon glyphicon-step-forward" aria-hidden="true"></span>
+					</button>
+				</div>
+				<div class="col-md-4 col-sm-6">
+					<div class="switch switch--vertical" id="direction">
+						<input id="radio-a" type="radio" name="first-switch" checked="checked" />
+						<label for="radio-a">Forward</label>
+						<input id="radio-b" type="radio" name="first-switch" />
+						<label for="radio-b">Backward</label><span id="fwdrev" class="toggle-outside"><span class="toggle-inside"></span></span>
+					</div>
+					<div class="switch switch--vertical" id="loop">
+						<input id="radio-c" type="radio" name="second-switch" checked="checked" />
+						<label for="radio-c">Loop Off</label>
+						<input id="radio-d" type="radio" name="second-switch" />
+						<label for="radio-d">Loop On</label><span class="toggle-outside"><span class="toggle-inside"></span></span>
+					</div>
+				</div>
+			</div>
+			<br>
+			<br>
+			<div class='play-controls'>
+				<div class="row">
+					<div class="col-sm-6">
+						<div class="row">
+							<div class="col-sm-4"> <span class="param">Speed <label class='rate'>[1]</label> <input class='playback-slider' name='playbackRate' type='range' min='0.01' max='10' step='0.01' value='1' disabled /> </span>
+							</div>
+							<div class="col-sm-4"> <span class="param" id="loopStart">Loop Start <label class='loopStart-value'>[0s]</label> <input class='loop-start' name='loop-start' type='range' min='0' max='100' step='0.1' value='0' disabled/> </span>
+							</div>
+							<div class="col-sm-4"> <span class="param" id="loopEnd">Loop End <label class='loopEnd-value'>[0s]</label> <input class='loop-end' name='loop-end' type='range' min='0' max='10' step='0.1' value='0' disabled/> </span>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-2"></div>
+							<div class="col-sm-4"> <span class="param">Filter Cutoff <label class='cutoff'>[16000hz]</label> <input class='cutoff-slider' name='filterCutoff' type='range' min='20' max='16000' step='1' value='16000' disabled /> </span>
+							</div>
+							<div class="col-sm-4"> <span class="param">Resonance <label class='q-value'>[Flat]</label> <input class='q-slider' name='filterQ' type='range' min='0' max='20' step='1' value='0' disabled /> </span>
+							</div>
+							<div class="col-sm-2"></div>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="row">
+							<div class="col-sm-12"> <span class="param"> Modulation Speed <label class='modSpeed-value'>[0hz]</label> <input class="modSpeed-slider" type="range" min="0" max="200" step="0.01" value="0" disabled /> </span>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-4"> <span class="param">Tremolo <label class='ampMod-value'>[0]</label> <input class="ampMod-slider" type="range" min="0" max="1" step="0.01" value="0" disabled /> </span>
+							</div>
+							<div class="col-sm-4"> <span class="param" id="vib">Vibrato <label class='playbackMod-value'>[0]</label> <input class="playbackMod-slider" type="range" min="-1200" max="1200" step="1" value="0" disabled /> </span>
+							</div>
+							<div class="col-sm-4"> <span class="param">Filter <label class='filterMod-value'>[0]</label> <input class="filterMod-slider" type="range" min="0" max="1000" step="1" value="0" disabled /> </span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="/static/js/audio.js"></script>{% endblock %}
