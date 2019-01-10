@@ -210,12 +210,12 @@
       if(playing) {
         let stop = await stopSound();
         playButton.disabled = true;
-        indication.innerHTML = 'Loading...' + '<br>'
+        indication.innerHTML = 'Loading...<br>'
         let go = await init();
      } else {
        let stop = await stopSound();
        playButton.disabled = true;
-       indication.innerHTML = 'Loading...' + '<br>'
+       indication.innerHTML = 'Loading...<br>'
        let go = await init();
      }
     };
@@ -229,12 +229,12 @@
         if(playing) {
           let disabled = await disableButton(playButton);
           let stop = await stopSound();
-          indication.innerHTML = 'Loading...' + '<br>'
+          indication.innerHTML = 'Loading...<br>'
           let go = await init();
        } else {
          let disabled = await disableButton(playButton);
          let stop = await stopSound();
-         indication.innerHTML = 'Loading...' + '<br>'
+         indication.innerHTML = 'Loading...<br>'
          let go = await init();
        }
     };
@@ -337,7 +337,7 @@
                 playButton.disabled = false;
                 nextButton.disabled = false;
                 indication.innerHTML = "<br>";
-                trackTitle.innerHTML = "["+userSearch+'] ' + ": " + tracks[loc].name + '<br>' + soundLength.toFixed(2) + "s";
+                trackTitle.innerHTML = `[${userSearch}] : ${tracks[loc].name} <br> ${soundLength.toFixed(2)}s`;
                 interface.scrollIntoView(true);
 
             });
@@ -400,7 +400,6 @@
 
     // stop sound and enable / disable buttons
     async function stopSound() {
-        // let stop = await UI('stop');
         if (state !== 0) {
           let lfostopped = await lfo.stop(0);
           let stopped = await sound.stop(0);
@@ -410,7 +409,7 @@
     // change playback speed/rate
     function changeRate(rate) {
         sound.playbackRate.value = rate;
-        playbackRate.innerHTML = "[" + rate + "]";
+        playbackRate.innerHTML = `[${rate}]`;
     }
 
     // change Filter Q
@@ -419,28 +418,28 @@
         value = parseInt(value);
         switch(true) {
           case (value < 5):
-            qValue.innerHTML = "[" + "Flat" + "]";
+            qValue.innerHTML = "[Flat]";
             break
           case (value < 12):
-            qValue.innerHTML = "[" + "Broad" + "]";
+            qValue.innerHTML = "[Broad]";
             break
           case (value < 17):
-            qValue.innerHTML = "[" + "Narrow" + "]";
+            qValue.innerHTML = "[Narrow]";
             break
           case (value <= 20):
-            qValue.innerHTML = "[" + "Thin" + "]";
+            qValue.innerHTML = "[Thin]";
         }
     }
     // change cutoff
     function changeCutoff(value) {
         biquadFilter.frequency.value = value;
-        cutoffValue.innerHTML = "[" + value + "hz]";
+        cutoffValue.innerHTML = `[${value}hz]`;
     };
 
     // change modulation speed
     function changeSpeed(rate) {
         lfo.frequency.value = rate;
-        modSpeed.innerHTML = "[" + rate + "hz]";
+        modSpeed.innerHTML = `[${rate}hz]`;
     };
 
 
@@ -449,15 +448,15 @@
       switch(name) {
         case ("amplitudeAmountSlider"):
           ampModGain.gain.value = amt;
-          amplitudeAmount.innerHTML = "[" + amt + "]";
+          amplitudeAmount.innerHTML = `[${amt}]`;
           break;
         case ("playbackModSlider"):
           playbackModGain.gain.value = amt;
-          playbackModValue.innerHTML = "[" + amt + "]";
+          playbackModValue.innerHTML = `[${amt}]`;
           break;
         case ("filterModSlider"):
           filterModGain.gain.value = amt;
-          filterModValue.innerHTML = "[" + amt + "]";
+          filterModValue.innerHTML = `[${amt}]`;
       }
     };
 
@@ -475,13 +474,13 @@
     // change loopStart
     function setLoopStart(start) {
         sound.loopStart = start;
-        loopStartValue.innerHTML = "[" + start +"s]";
+        loopStartValue.innerHTML = `[${start}s]`;
     }
 
     // change loopEnd
     function setLoopEnd(end) {
         sound.loopEnd = end;
-        loopEndValue.innerHTML = "[" + end +"s]";
+        loopEndValue.innerHTML = `[${end}s]`;
     }
 
     async function UI(state){
