@@ -83,8 +83,6 @@
       const fields = '&fields=name,id,previews';
       const token = "&token=2HrEIGsIAP3M5LfIqSlfz8xjU4oIGkGLHnhZMeU9";
       let freeSoundQuery = 'https://freesound.org/apiv2/search/text/?query='.concat(search, fields, token);
-      const error = new Error("What a shame, no sounds found there, try something else");
-
       const resp = await fetching(freeSoundQuery);
       const unpacked = await unpack(resp);
       if (unpacked !== false) {
@@ -101,14 +99,11 @@
                     return {};
                 }))
            // Transform the data into json
-         .then((data) => {
-           var searchResults = data;
-           return searchResults;
-           })
+         .then((data) => data)
       }
 
     async function unpack(data) {
-      var resultsLength = data.results.length;
+      let resultsLength = data.results.length;
       for (let i = 0; i <= resultsLength; i++) {
         try {
           track[i] = new track(data.results[i].id, data.results[i].name, data.results[i].previews['preview-lq-mp3']);
@@ -248,7 +243,6 @@
       button.disabled = true;
     }
 
-
     playbackSlider.oninput = () => changeRate(playbackSlider.value);
 
     qSlider.oninput = () => changeQ(qSlider.value);
@@ -327,13 +321,13 @@
         request.open('GET', url, true);
         request.responseType = 'arraybuffer';
 
-        request.onload = function () {
+        request.onload = () =>  {
             audioContext.decodeAudioData(request.response, function (buffer) {
                 soundLength = buffer.duration;
                 sampleBuffer = buffer;
                 reversed = cloneAudioBuffer(buffer, audioContext);
-                loopStart.setAttribute('max', Math.floor(soundLength));
-                loopEnd.setAttribute('max', Math.floor(soundLength));
+                loopStart.setAttribute('max', soundLength.toFixed(2));
+                loopEnd.setAttribute('max', soundLength.toFixed(2));
                 playButton.disabled = false;
                 nextButton.disabled = false;
                 indication.innerHTML = "<br>";
