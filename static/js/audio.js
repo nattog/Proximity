@@ -1,10 +1,10 @@
-  var launch = document.getElementById("playLink");
-  var interface = document.getElementById('interface');
-  var intro = document.getElementById('introduction');
-  var information = document.getElementById('information');
-  var isSafari = /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor);
+  var launch = document.getElementById("playLink"),
+      interface = document.getElementById('interface'),
+      intro = document.getElementById('introduction'),
+      information = document.getElementById('information'),
+      isSafari = /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor);
 
-  launch.onclick = function() {
+  launch.onclick = () => {
     interface.style.display = "block";
     launch.style.display = "none";
     intro.style.display = "none";
@@ -15,59 +15,56 @@
     }
     };
 
-    var tracks = [];
-    var results = [];
-    var title = document.querySelector('title').innerHTML;
-    var loc = 0;
-    var userSearch = "";
-    var form = document.querySelector('.form-control');
-    var audioBlock = document.querySelector('.audio');
-    var searchBlock = document.querySelector('#searchDiv');
+    var tracks = [],
+        results = [],
+        title = document.querySelector('title').innerHTML,
+        loc = 0,
+        userSearch = "",
+        form = document.querySelector('.form-control'),
+        submit = document.querySelector('form'),
+        audioBlock = document.querySelector('.audio'),
+        searchBlock = document.querySelector('#searchDiv');
 
-    var audioContext = new(window.AudioContext || window.webkitAudioContext);
-    var sampleBuffer = document.querySelector('.play');
-    var sound = document.querySelector('.play');
-    var playButton = document.querySelector('.play');
-    var stopButton = document.querySelector('.stop');
-    var reverseButton = document.querySelector('#direction');
-    var previousButton = document.querySelector('.previous');
-    var nextButton = document.querySelector('.next');
-    var mousepan = false;
-    var loop = false;
-    var forward = true;
-    var playlist = tracks;
-    var trackTitle = document.querySelector('.audiotrack');
-    var loopButton = document.querySelector('#loop');
-    var loopStart = document.querySelector('.loop-start');
-    var loopEnd = document.querySelector('.loop-end');
-    var loopStartValue = document.querySelector('.loopStart-value');
-    var loopEndValue = document.querySelector('.loopEnd-value');
-    var playbackSlider = document.querySelector('.playback-slider');
-    var playbackRate = document.querySelector('.rate');
-    var cutoffSlider = document.querySelector('.cutoff-slider');
-    var cutoffValue = document.querySelector('.cutoff');
-    var qSlider = document.querySelector('.q-slider');
-    var qValue = document.querySelector('.q-value');
-    var modSpeedSlider = document.querySelector('.modSpeed-slider');
-    var modSpeed = document.querySelector('.modSpeed-value');
-    var amplitudeAmountSlider = document.querySelector('.ampMod-slider');
-    var amplitudeAmount = document.querySelector('.ampMod-value');
-    var playbackModSlider = document.querySelector('.playbackMod-slider');
-    var playbackModValue = document.querySelector('.playbackMod-value');
-    var filterModSlider = document.querySelector('.filterMod-slider');
-    var filterModValue = document.querySelector('.filterMod-value');
-    var indication = document.querySelector('#indication');
-    var ampModGain = audioContext.createGain();
-    var playbackModGain = audioContext.createGain();
-    var filterModGain = audioContext.createGain();
-    var vca = audioContext.createGain();
+    var audioContext = new(window.AudioContext || window.webkitAudioContext),
+        sampleBuffer, sound, playButton = document.querySelector('#play'),
+        stopButton = document.querySelector('#stop'),
+        reverseButton = document.querySelector('#direction'),
+        previousButton = document.querySelector('#previous'),
+        nextButton = document.querySelector('#next'),
+        loop = false,
+        forward = true,
+        trackTitle = document.querySelector('.audiotrack'),
+        loopButton = document.querySelector('#loop'),
+        loopStart = document.querySelector('.loop-start'),
+        loopEnd = document.querySelector('.loop-end'),
+        loopStartValue = document.querySelector('.loopStart-value'),
+        loopEndValue = document.querySelector('.loopEnd-value'),
+        playbackSlider = document.querySelector('.playback-slider'),
+        playbackRate = document.querySelector('.rate'),
+        cutoffSlider = document.querySelector('.cutoff-slider'),
+        cutoffValue = document.querySelector('.cutoff'),
+        qSlider = document.querySelector('.q-slider'),
+        qValue = document.querySelector('.q-value'),
+        modSpeedSlider = document.querySelector('.modSpeed-slider'),
+        modSpeed = document.querySelector('.modSpeed-value'),
+        amplitudeAmountSlider = document.querySelector('.ampMod-slider'),
+        amplitudeAmount = document.querySelector('.ampMod-value'),
+        playbackModSlider = document.querySelector('.playbackMod-slider'),
+        playbackModValue = document.querySelector('.playbackMod-value'),
+        filterModSlider = document.querySelector('.filterMod-slider'),
+        filterModValue = document.querySelector('.filterMod-value'),
+        indication = document.querySelector('#indication'),
+        ampModGain = audioContext.createGain(),
+        playbackModGain = audioContext.createGain(),
+        filterModGain = audioContext.createGain(),
+        vca = audioContext.createGain();
 
   var playing = (playButton.disabled === true);
 
 
-    document.querySelector('form').addEventListener('submit', searchSubmit);
+    submit.addEventListener('submit', searchSubmit);
 
-    function track(trackID, trackName, trackPreview){
+    function track(trackID, trackName, trackPreview) {
       this.trackID = trackID;
       this.name = trackName;
       this.preview = trackPreview;
@@ -85,7 +82,7 @@
     async function freeSound(search) {
       const fields = '&fields=name,id,previews';
       const token = "&token=2HrEIGsIAP3M5LfIqSlfz8xjU4oIGkGLHnhZMeU9";
-      var freeSoundQuery = 'https://freesound.org/apiv2/search/text/?query='.concat(search, fields, token);
+      let freeSoundQuery = 'https://freesound.org/apiv2/search/text/?query='.concat(search, fields, token);
       const error = new Error("What a shame, no sounds found there, try something else");
 
       const resp = await fetching(freeSoundQuery);
@@ -169,13 +166,9 @@
       }
   }
 
-    playButton.onclick = function () {
-        playSound();
-    };
+    playButton.onclick = () => playSound();
 
-    stopButton.onclick = function () {
-        stopSound();
-    };
+    stopButton.onclick = () => stopSound();
 
     var reverseTasks = [
       _ => new Promise(resolve => {
@@ -194,8 +187,6 @@
 
     reverseButton.onclick = async function () {
       let checkRev = await reverseSound(document.querySelector('#radio-a').checked);
-      var playing = (playButton.disabled === true);
-      var stopped = (stopButton.disabled === true);
       if(playing){
         (function iterate(i) {
   	       reverseTasks[i]().then(() => {
@@ -258,35 +249,21 @@
     }
 
 
-    playbackSlider.oninput = function () {
-        changeRate(playbackSlider.value);
-    };
+    playbackSlider.oninput = () => changeRate(playbackSlider.value);
 
-    qSlider.oninput = () => {
-      changeQ(qSlider.value)
-    };
+    qSlider.oninput = () => changeQ(qSlider.value);
 
-    cutoffSlider.oninput = () => {
-      changeCutoff(cutoffSlider.value)
-    };
+    cutoffSlider.oninput = () => changeCutoff(cutoffSlider.value);
 
-    modSpeedSlider.oninput = () => {
-      changeSpeed(modSpeedSlider.value)
-    };
+    modSpeedSlider.oninput = () => changeSpeed(modSpeedSlider.value);
 
-    amplitudeAmountSlider.oninput = () => {
-      changeAmount(amplitudeAmountSlider.value, "amplitudeAmountSlider");
-    };
+    amplitudeAmountSlider.oninput = () => changeAmount(amplitudeAmountSlider.value, "amplitudeAmountSlider");
 
     if (!isSafari) {
-      playbackModSlider.oninput = () => {
-          changeAmount(playbackModSlider.value, "playbackModSlider");
-      };
+      playbackModSlider.oninput = () => changeAmount(playbackModSlider.value, "playbackModSlider");
     }
 
-    filterModSlider.oninput = () => {
-      changeAmount(filterModSlider.value, "filterModSlider");
-    };
+    filterModSlider.oninput = () => changeAmount(filterModSlider.value, "filterModSlider");
 
     loopButton.onclick = () => {
       if (!document.querySelector('#radio-c').checked) {
@@ -298,13 +275,9 @@
       }
     };
 
-    loopStart.oninput = () => {
-        setLoopStart(loopStart.value);
-    };
+    loopStart.oninput = () => setLoopStart(loopStart.value);
 
-    loopEnd.oninput = () => {
-        setLoopEnd(loopEnd.value);
-    };
+    loopEnd.oninput = () => setLoopEnd(loopEnd.value);
 
 
     // set our sound buffer, loop, and connect to destination
@@ -375,23 +348,23 @@
 
 
     function cloneAudioBuffer(audioBuffer, context){
-      var channels = [],
+      let channels = [],
           numChannels = audioBuffer.numberOfChannels;
 
       //clone the underlying Float32Arrays
-      for (var i = 0; i < numChannels; i++){
+      for (let i = 0; i < numChannels; i++){
           channels[i] = new Float32Array(audioBuffer.getChannelData(i));
       }
 
       //create the new AudioBuffer (assuming AudioContext variable is in scope)
-      var newBuffer = context.createBuffer(
+      let newBuffer = context.createBuffer(
                           audioBuffer.numberOfChannels,
                           audioBuffer.length,
                           audioBuffer.sampleRate
                       );
 
       //copy the cloned arrays to the new AudioBuffer, reversing them
-      for (var i = 0; i < numChannels; i++){
+      for (let i = 0; i < numChannels; i++){
           newBuffer.getChannelData(i).set(channels[i]);
           Array.prototype.reverse.call( newBuffer.getChannelData(i) );
 
