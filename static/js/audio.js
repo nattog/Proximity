@@ -257,8 +257,11 @@
 
     filterModSlider.oninput = () => changeAmount(filterModSlider.value, "filterModSlider");
 
+    var firstLoop = 0;
+
     loopButton.onclick = () => {
       if (!document.querySelector('#radio-c').checked) {
+          firstLoop++;
           loop = true;
           loopOn();
       } else {
@@ -338,22 +341,27 @@
       loopStart.setAttribute('max', soundLength);
       loopEnd.setAttribute('max', soundLength);
       const sLen = parseFloat(soundLength);
-      if (state) {
-        if (loopLength > sLen && formerStart < sLen) {
-          loopEnd.value = sLen;
-        } else if (loopLength > sLen && formerStart > sLen) {
-          loopStart.value = "0";
-          loopEnd.value = sLen;
-        } else if (loopLength < sLen && formerEnd < sLen) {
-          loopStart.value = (formerEnd - loopLength >= 0 ? formerEnd - loopLength : "0");
-        } else if (loopLength < sLen && formerEnd > sLen) {
-          loopEnd.value = soundLength;
-          loopStart.value = (loopEnd.value - loopLength >= 0 ? loopEnd.value - loopLength : "0");
-          }
+      if (firstLoop) {
+        if (state) {
+          if (loopLength > sLen && formerStart < sLen) {
+            loopEnd.value = sLen;
+            } else if (loopLength > sLen && formerStart > sLen) {
+              loopStart.value = "0";
+              loopEnd.value = sLen;
+            } else if (loopLength < sLen && formerEnd < sLen) {
+              loopStart.value = (formerEnd - loopLength >= 0 ? formerEnd - loopLength : "0");
+            } else if (loopLength < sLen && formerEnd > sLen) {
+              loopEnd.value = soundLength;
+              loopStart.value = (loopEnd.value - loopLength >= 0 ? loopEnd.value - loopLength : "0");
+              }
         } else {
         loopStart.value = "0";
         loopEnd.value = sLen;
       }
+    } else {
+      loopStart.value = "0";
+      loopEnd.value = soundLength;
+    }
     }
 
     function cloneAudioBuffer(audioBuffer, context){
@@ -474,6 +482,7 @@
             sound.loop = true;
             loopStart.disabled = false;
             loopEnd.disabled = false;
+
         } else {
             loopStart.disabled = true;
             loopEnd.disabled = true;
