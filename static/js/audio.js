@@ -98,7 +98,6 @@
                     console.err(`'${err}' happened!`);
                     return {};
                 }))
-           // Transform the data into json
          .then((data) => data)
       }
 
@@ -185,7 +184,6 @@
       if(playing){
         (function iterate(i) {
   	       reverseTasks[i]().then(() => {
-      	      // console.log(i + ' done!');
       	       if (reverseTasks[++i]) iterate(i);
              });
            })(0);
@@ -279,11 +277,9 @@
         if (forward === true) {
           sound = audioContext.createBufferSource();
           sound.buffer = sampleBuffer;
-          // console.log(sound.buffer);
         } else {
           sound = audioContext.createBufferSource();
           sound.buffer = reversed;
-          // console.log(sound.buffer);
         }
         lfo = audioContext.createOscillator();
         biquadFilter = audioContext.createBiquadFilter();
@@ -323,16 +319,11 @@
 
         request.onload = () =>  {
             audioContext.decodeAudioData(request.response, function (buffer) {
-                soundLength = buffer.duration;
+                soundLength = buffer.duration.toFixed(2);
                 sampleBuffer = buffer;
                 reversed = cloneAudioBuffer(buffer, audioContext);
-                loopStart.setAttribute('max', soundLength.toFixed(2));
-                loopEnd.setAttribute('max', soundLength.toFixed(2));
-                playButton.disabled = false;
-                nextButton.disabled = false;
-                indication.innerHTML = "<br>";
-                trackTitle.innerHTML = `[${userSearch}] : ${tracks[loc].name} <br> ${soundLength.toFixed(2)}s`;
-                interface.scrollIntoView(true);
+                setLoop();
+                UI('setup');
 
             });
         };
@@ -340,6 +331,30 @@
         request.send();
     }
 
+    function setLoop() {
+      const formerStart = parseFloat(loopStart.value);
+      const formerEnd = parseFloat(loopEnd.value);
+      const loopLength = parseFloat(formerEnd - formerStart);
+      loopStart.setAttribute('max', soundLength);
+      loopEnd.setAttribute('max', soundLength);
+      const sLen = parseFloat(soundLength);
+      if (state) {
+        if (loopLength > sLen && formerStart < sLen) {
+          loopEnd.value = sLen;
+        } else if (loopLength > sLen && formerStart > sLen) {
+          loopStart.value = "0";
+          loopEnd.value = sLen;
+        } else if (loopLength < sLen && formerEnd < sLen) {
+          loopStart.value = (formerEnd - loopLength >= 0 ? formerEnd - loopLength : "0");
+        } else if (loopLength < sLen && formerEnd > sLen) {
+          loopEnd.value = soundLength;
+          loopStart.value = (loopEnd.value - loopLength >= 0 ? loopEnd.value - loopLength : "0");
+          }
+        } else {
+        loopStart.value = "0";
+        loopEnd.value = sLen;
+      }
+    }
 
     function cloneAudioBuffer(audioBuffer, context){
       let channels = [],
@@ -411,17 +426,17 @@
         biquadFilter.Q.value = value;
         value = parseInt(value);
         switch(true) {
-          case (value < 5):
-            qValue.innerHTML = "[Flat]";
-            break
-          case (value < 12):
+          case (value <= 6):
             qValue.innerHTML = "[Broad]";
             break
-          case (value < 17):
+          case (value <= 12):
+            qValue.innerHTML = "[Gentle]";
+            break
+          case (value <= 18):
             qValue.innerHTML = "[Narrow]";
             break
-          case (value <= 20):
-            qValue.innerHTML = "[Thin]";
+          case (value <= 24):
+            qValue.innerHTML = "[Steep]";
         }
     }
     // change cutoff
@@ -507,6 +522,15 @@
                   playbackModSlider.disabled = false;
                 }
                 filterModSlider.disabled = false;
+                break
+            case 'setup':
+                playButton.disabled = false;
+                nextButton.disabled = false;
+                indication.innerHTML = "<br>";
+                trackTitle.innerHTML = `[${userSearch}] : ${tracks[loc].name} <br> ${soundLength}s`;
+                loopEndValue.innerHTML = `[${loopEnd.value}s]`;
+                loopStartValue.innerHTML = `[${loopStart.value}s]`;
+                interface.scrollIntoView(true);
         }
     }
 
